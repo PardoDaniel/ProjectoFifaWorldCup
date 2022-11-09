@@ -31,9 +31,11 @@ df['Comeback after Half-time'] = np.select(conditionsComeback,valuesComeback)
 
 
 
-dfComebacksByYear = df.groupby('Year')['Comeback after Half-time'].apply(lambda x: (x=='True').sum()).reset_index(name='count')
+dfComebacksByYear = df.groupby('Year')['Comeback after Half-time'].apply(lambda x: (x=='True').sum()).reset_index(name='# Comebacks')
+dfComebacksByTeam = df.groupby('Winner')['Comeback after Half-time'].apply(lambda x: (x=='True').sum()).reset_index(name='# Comebacks')
 
 fig, ax = plot.subplots()
-ax.plot(dfComebacksByYear['Year'],dfComebacksByYear['count'], linewidth= 2.0)
+ax.plot(dfComebacksByYear['Year'],dfComebacksByYear['# Comebacks'], linewidth= 2.0)
 plot.show()
-print(dfComebacksByYear)
+print(dfComebacksByTeam)
+dfComebacksByTeam.to_csv('ByTeam.csv')
